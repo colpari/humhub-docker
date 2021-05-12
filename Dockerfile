@@ -1,3 +1,4 @@
+ARG HUMHUB_REPO
 ARG HUMHUB_VERSION
 ARG VCS_REF
 
@@ -6,6 +7,7 @@ FROM composer:2.0.13 as builder-composer
 FROM alpine:3.13.5 as builder
 
 ARG HUMHUB_VERSION
+ARG HUMHUB_REPO
 
 RUN apk update
 RUN apk add --no-cache \
@@ -13,7 +15,7 @@ RUN apk add --no-cache \
     tzdata
 
 WORKDIR /usr/src/
-ADD https://github.com/humhub/humhub/archive/v${HUMHUB_VERSION}.tar.gz /usr/src/
+ADD https://github.com/${HUMHUB_REPO}/humhub/archive/v${HUMHUB_VERSION}.tar.gz /usr/src/
 RUN tar xzf v${HUMHUB_VERSION}.tar.gz && \
     mv humhub-${HUMHUB_VERSION} humhub && \
     rm v${HUMHUB_VERSION}.tar.gz
@@ -71,7 +73,7 @@ LABEL name="HumHub" version=${HUMHUB_VERSION} variant="base" \
       org.label-schema.url="https://www.humhub.com/" \
       org.label-schema.vcs-ref=$VCS_REF \
       org.label-schema.vcs-url="https://github.com/mriedmann/humhub-docker" \
-      org.label-schema.vendor="HumHub GmbH" \
+      org.label-schema.vendor="colpari GmbH" \
       org.label-schema.version=${HUMHUB_VERSION} \
       org.label-schema.schema-version="1.0"
 

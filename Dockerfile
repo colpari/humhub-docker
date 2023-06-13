@@ -183,3 +183,11 @@ RUN apk add --no-cache nginx && \
 COPY nginx/ /
 
 EXPOSE 80
+
+
+
+FROM humhub_allinone as humhub_colpari
+LABEL variant="colpari"
+COPY themes/ /var/www/localhost/htdocs/themes/
+RUN mkdir -vp /var/www/localhost/htdocs/uploads/profile_image/ && chown -cR 100:101 /var/www/localhost/htdocs/uploads/profile_image/
+EXPOSE 80
